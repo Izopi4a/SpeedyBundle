@@ -1,0 +1,21 @@
+{
+    "name": "izopi4a/speedy-bundle",
+    "description": "speedy courier bundle for symfony",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Izopi4a\\SpeedyBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "izopi4a"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.4",
+        "symfony/config": "^6.4 || ^7.0"
+    }
+}
