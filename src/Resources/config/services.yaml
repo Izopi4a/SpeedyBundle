@@ -1,0 +1,5 @@
+services:
+  Izopi4a\SpeedyBundle\Service\SpeedyService:
+    public: true
+    arguments: ["%env(IZOPI4A_SPEEDY_USER)%","%env(IZOPI4A_SPEEDY_PASS)%","%env(IZOPI4A_SPEEDY_LOCALE)%"]
+      
