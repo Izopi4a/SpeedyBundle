@@ -1,11 +1,13 @@
 <?php
 
 namespace Izopi4a\SpeedyBundle\Service;
+
 use GuzzleHttp\Client;
+
 class SpeedyService
 {
 
-    CONST string API_URL = "https://api.speedy.bg/v1/";
+    const string API_URL = "https://api.speedy.bg/v1/";
 
     private string $user;
     private string $password;
@@ -38,7 +40,7 @@ class SpeedyService
         $this->locale = $locale;
         return $this;
     }
-    
+
     //
     protected function addDefaultData()
     {
@@ -89,22 +91,22 @@ class SpeedyService
         return $this;
     }
 
-    protected function getClient() : Client
+    protected function getClient(): Client
     {
 
         $client = new Client([
             // Base URI is used with relative requests
             'base_uri' => self::API_URL,
             // You can set any number of default request options.
-            'timeout'  => 10.0,
+            'timeout' => 10.0,
             'verify' => false,
             'debug' => false
         ]);
-        
+
         return $client;
     }
 
-    public function make( string $subPath)
+    public function make(string $subPath)
     {
 
         $options = [];
@@ -118,12 +120,12 @@ class SpeedyService
         $request = $client->request('POST', $subPath, $options);
 
         if ($request->getStatusCode() !== 200) {
-            throw new \Shop\Speedy\Exception("bad status code form speedy");
+            throw new Http\Exception("bad status code form speedy");
         }
 
         $body = (string)$request->getBody();
 
-        return  json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
     }
 
     private function resetData()
@@ -153,26 +155,27 @@ class SpeedyService
 
     /**
      *
-     * @param Http\Payload\Recipient           $recipient
-     * @param Http\Payload\Content             $content
+     * @param Http\Payload\Recipient $recipient
+     * @param Http\Payload\Content $content
      *
      * @param Http\Payload\CourierServicePayer $courierServicePayer
      *
-     * @param float                       $cashOnDelivery
+     * @param float $cashOnDelivery
      *
      * @return Http\Response\Delivery
      *
      * @throws Http\Exception
      */
     public function calculateDelivery(
-        Http\Payload\Recipient $recipient,
-        Http\Payload\Content $content,
+        Http\Payload\Recipient           $recipient,
+        Http\Payload\Content             $content,
         Http\Payload\CourierServicePayer $courierServicePayer,
-        float $cashOnDelivery = 0
-    ): Http\Response\Delivery {
+        float                            $cashOnDelivery = 0
+    ): Http\Response\Delivery
+    {
 
         $service = [
-            'serviceIds'           => [505],
+            'serviceIds' => [505],
             'autoAdjustPickupDate' => true,
         ];
 
@@ -203,9 +206,9 @@ class SpeedyService
 
 
     /**
-     * @param int   $siteOrOfficeId
-     * @param bool  $isOffice
-     * @param int   $itemsCount
+     * @param int $siteOrOfficeId
+     * @param bool $isOffice
+     * @param int $itemsCount
      * @param float $itemsWeight
      *
      * @param float $cashOnDelivery
@@ -214,12 +217,13 @@ class SpeedyService
      * @throws Exception
      */
     public function quickDeliveryCalc(
-        int $siteOrOfficeId,
-        bool $isOffice,
-        int $itemsCount,
+        int   $siteOrOfficeId,
+        bool  $isOffice,
+        int   $itemsCount,
         float $itemsWeight,
         float $cashOnDelivery = 0.00
-    ): Http\Response\Delivery {
+    ): Http\Response\Delivery
+    {
 
         if ($isOffice) {
             $recipient = new Http\Payload\Recipient(0, $siteOrOfficeId);
@@ -238,8 +242,8 @@ class SpeedyService
      * search for office
      * every param can be passed alone and empty to return all
      *
-     * @param int    $siteId
-     * @param int    $countryId
+     * @param int $siteId
+     * @param int $countryId
      * @param string $name
      *
      * @return Http\Response\Office[];
