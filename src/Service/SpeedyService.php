@@ -134,18 +134,22 @@ class SpeedyService
         $this->addDefaultData();
     }
 
-    public function findCity(string $name, int $countryId = 100/*BG*/, bool $exact = false): array
+    public function findCity(string $name, int $countryId = 100/*BG*/, string $postCode = ""): array
     {
 
         $this->resetData();
         $this->addData("name", $name);
         $this->addData("countryId", $countryId);
 
+        if ($postCode !== "") {
+            $this->addData("postCode", $postCode);
+        }
+
         $r = $this->make('location/site');
 
         $arr = [];
-        if (is_array($r->sites) && count($r->sites) > 0) {
-            foreach ($r->sites as $site) {
+        if (is_array($r['sites']) && count($r['sites']) > 0) {
+            foreach ($r['sites'] as $site) {
                 $arr[] = new Http\Response\Site($site);
             }
         }

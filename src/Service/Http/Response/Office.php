@@ -65,6 +65,11 @@ class Office {
         return $this->name;
     }
 
+    public function getNameEn(): string
+    {
+        return $this->nameEN;
+    }
+
     protected function setNameEN(string $name): self
     {
         $this->nameEN = $name;

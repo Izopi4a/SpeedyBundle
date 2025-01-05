@@ -49,17 +49,17 @@ class Site
      *
      * @param \stdClass $data
      */
-    public function __construct(\stdClass $data)
+    public function __construct(array $data)
     {
 
-        $this->setId($data->id)
-            ->setName($data->name)
-            ->setNameEN($data->nameEn)
-            ->setPostCode($data->postCode)
-            ->setCountryId($data->countryId)
-            ->setType($data->type)
-            ->setTypeEN($data->typeEn)
-            ->setServingDays($data->servingDays);
+        $this->setId($data['id'])
+            ->setName($data['name'])
+            ->setNameEN($data['nameEn'])
+            ->setPostCode($data['postCode'])
+            ->setCountryId($data['countryId'])
+            ->setType($data['type'])
+            ->setTypeEN($data['typeEn'])
+            ->setServingDays($data['servingDays']);
     }
 
     protected function setId(int $id): self
