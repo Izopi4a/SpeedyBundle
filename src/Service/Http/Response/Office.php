@@ -2,7 +2,8 @@
 
 namespace Izopi4a\SpeedyBundle\Service\Http\Response;
 
-class Office {
+class Office implements \JsonSerializable
+{
 
     /**
      * siteId
@@ -107,5 +108,17 @@ class Office {
     public function getPickUpAllowed(): int
     {
         return $this->pickUpAllowed;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "name_en" => $this->getNameEn(),
+            "type" => $this->getType(),
+            "site_id" => $this->getSiteId(),
+            "pickup_allowed" => $this->getPickUpAllowed()
+        ];
     }
 }

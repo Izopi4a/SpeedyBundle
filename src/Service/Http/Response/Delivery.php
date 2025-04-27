@@ -31,6 +31,8 @@ class Delivery
      */
     protected float $netAmount = 0.00;
 
+    protected float $codPremium = 0.00;
+
     public function __construct(array $data)
     {
         $this->parse($data);
@@ -57,11 +59,20 @@ class Delivery
 
         $price = $calc['price'];
 
+        if (isset($price['details']) && isset($price['details']['codPremium'])) {
+            $this->codPremium = (float)$price['details']['codPremium']["amount"];
+        }
+
         $this->setNetAmount($price['amount']);
         $this->setVat($price['vat']);
         $this->setTotal($price['total']);
 
         return $this;
+    }
+
+    public function getCashOnDeliveryTax() : float
+    {
+        return $this->codPremium;
     }
 
     public function setError(string $message) :self
